@@ -1,6 +1,5 @@
 const dragArea = document.querySelector('.drag-area'),
     dragText = document.querySelector('.drag-area .text-wrapper .text'),
-    fileInput = document.querySelector(".file-input"),
     filterOptions = document.querySelectorAll(".filter button"),
     filterName = document.querySelector(".filter-info .name"),
     filterValue = document.querySelector(".filter-info .value"),
@@ -10,22 +9,20 @@ const dragArea = document.querySelector('.drag-area'),
     resetFilterBtn = document.querySelector(".reset-filter"),
     chooseImgBtn = document.querySelector(".choose-img"),
     saveImgBtn = document.querySelector(".save-img");
+    browse = document.querySelector('.browse'),
+    input = document.querySelector('.file-input');
 
 
-let button = document.querySelector('.btn');
-let input = document.querySelector('.file-input');
-
-let file;
-
-button.onclick = () => {
+chooseImgBtn.onclick = () => {
+    input.click();
+};
+browse.onclick = () => {
     input.click();
 };
 
 input.addEventListener('change', function () {
     file = this.files[0];
     loadImage();
-
-
 });
 
 
@@ -36,7 +33,6 @@ dragArea.addEventListener('dragover', (event) => {
 
     event.preventDefault()
     dragText.textContent = 'Release to Upload';
-    dragArea.classList.add("active");
 });
 
 // when file is inside the dragArea
@@ -45,7 +41,6 @@ dragArea.addEventListener('dragleave', () => {
     // console.log("File left the drag Area");
 
     dragText.textContent = 'Drag & Drop';
-    dragArea.classList.remove("active");
 });
 
 // when file is inside the dragArea
@@ -74,12 +69,12 @@ const loadImage = () => {
         previewImg.src = URL.createObjectURL(file);
         previewImg.addEventListener("load", () => {
             document.querySelector(".drag-area .text-wrapper").classList.add("hide");
+            document.querySelector(".img-editor").classList.remove("disable");
             resetFilterBtn.click();
         });
     }
     else {
         alert("This file is not an Image");
-        dragArea.classList.remove("active");
         dragText.textContent = 'Drag & Drop';
     }
 }
